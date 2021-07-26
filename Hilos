@@ -1,0 +1,74 @@
+paquete  mpoo_p12 ;
+/ **
+* @autor Osmara
+ * /
+ clase  pública MPOO_P12 {
+    / **
+     * @param args Argumentos de la línea de comandos
+     * /
+    public  static  void  main ( String [] args ) {
+        Sistema . fuera . println ( " ******* Hilo ******* " );
+        HiloT hiloT1 =  nuevo  HiloT ( " Primer Hilo " );
+        hiloT1 . comienzo();
+        
+        nuevo  HiloT ( " Segundo Hilo " ) . comienzo();
+        Sistema . fuera . println ( " Termina el hilo principal " );
+        
+        Sistema . fuera . println ( " ******* Ejecutable ******* " );
+        nuevo  hilo ( nuevo  HiloR (), " Primer Hilo " ) . comienzo();
+         hilo nuevo ( nuevo  HiloR (), " Segundo Hilo " ) . comienzo();
+        Sistema . fuera . println ( " Termina el hilo principal " );
+        
+        Sistema . fuera . println ( " ******* ThreadGroup ******* " );
+        ThreadGroup grupoHilos =  new  ThreadGroup ( " Grupo de hilos " );
+        Hilo hilo1 =  nuevo  HiloAgrupado (grupoHilos, " Hilo 1 " );
+        Hilo hilo2 =  nuevo  HiloAgrupado (grupoHilos, " Hilo 2 " );
+        Hilo hilo3 =  nuevo  HiloAgrupado (grupoHilos, " Hilo 3 " );
+        Hilo hilo4 =  nuevo  HiloAgrupado (grupoHilos, " Hilo 4 " );
+        Hilo hilo5 =  nuevo  HiloAgrupado (grupoHilos, " Hilo 5 " );
+        
+        hilo1 . comienzo();
+        hilo2 . comienzo();
+        hilo3 . comienzo();
+        hilo4 . comienzo();
+        hilo5 . comienzo();
+        
+        listarHilos (grupoHilos);
+        
+        Sistema . fuera . println ( " ******* Prioridades ******* " );
+        Sistema . fuera . println ( " Prioridad del grupo = " + grupoHilos . getMaxPriority ());
+        hilo3 . setPriority ( Thread . MAX_PRIORITY );
+        grupoHilos . setMaxPriority ( Thread . NORM_PRIORITY );
+        Sistema . fuera . println ( " Prioridad del grupo = " + grupoHilos . getMaxPriority ());
+        Sistema . fuera . println ( " Prioridad del Thread 1 = " + hilo1 . getPriority ());
+        Sistema . fuera . println ( " Prioridad del Thread 2 = " + hilo2 . getPriority ());
+        Sistema . fuera . println ( " Prioridad del Thread 3 = " + hilo3 . getPriority ());
+        Sistema . fuera . println ( " Prioridad del Thread 4 = " + hilo4 . getPriority ());
+        Sistema . fuera . println ( " Prioridad del Thread 5 = " + hilo5 . getPriority ());
+          
+          nueva  Cuenta ( " Acceso 1 " ) . comienzo();
+          nueva  Cuenta ( " Acceso 2 " ) . comienzo();
+          nueva  Cuenta ( " Deposito 1 " ) . comienzo();
+          nueva  Cuenta ( " Deposito 2 " ) . comienzo();
+          Sistema . fuera . println ( " Termina el hilo principal " );
+    }
+
+     listarHilos vacío estático  privado ( ThreadGroup grupoHilos ) {  
+        Sistema . fuera . println ( " Entrando en el método listarHilos " );
+        int numHilos;
+        prueba {
+            Thread [] listaDeHilos;
+
+            numHilos = grupoHilos . activeCount ();
+            listaDeHilos =  hilo nuevo  [numHilos];
+            grupoHilos . enumerar (listaDeHilos);
+            Sistema . fuera . println ( " Hilos activos: " + numHilos);
+
+            para ( int i =  0 ; i < numHilos; i ++ ) {
+                Sistema . fuera . println ( " Hilo activo en pos " + i
+                        +  " = " + listaDeHilos [i] . getName ());            
+            }
+        } catch ( NullPointerException npex) {
+            Sistema . fuera . println ( " ERROR. Los hilos terminaron antes de tiempo " );        }
+    }
+}
